@@ -19,6 +19,7 @@ func resourcePTRRecord() *schema.Resource {
 			"vm_name": &schema.Schema{
 				Type:        schema.TypeString,
 				Required:    true,
+				ForceNew:    true,
 				Description: "The name of the VM.",
 			},
 			"cidr": &schema.Schema{
@@ -29,6 +30,7 @@ func resourcePTRRecord() *schema.Resource {
 			"zone": &schema.Schema{
 				Type:        schema.TypeString,
 				Required:    true,
+				ForceNew:    true,
 				Description: "Zone under which record has to be created.",
 			},
 			"dns_view": &schema.Schema{
@@ -40,6 +42,7 @@ func resourcePTRRecord() *schema.Resource {
 			"ip_addr": &schema.Schema{
 				Type:        schema.TypeString,
 				Required:    true,
+				ForceNew:    true,
 				Description: "IP address your instance in cloud. For static allocation, set the field with valid IP. For dynamic allocation, leave this field empty and set the cidr field.",
 			},
 			"vm_id": &schema.Schema{
@@ -50,6 +53,7 @@ func resourcePTRRecord() *schema.Resource {
 			"tenant_id": &schema.Schema{
 				Type:        schema.TypeString,
 				Required:    true,
+				ForceNew:    true,
 				Description: "Unique identifier of your tenant in cloud.",
 			},
 		},
