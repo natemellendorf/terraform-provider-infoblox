@@ -6,7 +6,7 @@ import (
 
 	"github.com/hashicorp/terraform/helper/resource"
 	"github.com/hashicorp/terraform/terraform"
-	ibclient "github.com/infobloxopen/infoblox-go-client"
+	ibclient "github.com/natemellendorf/infoblox-go-client"
 )
 
 func TestAccResourcePTRRecord(t *testing.T) {

@@ -5,7 +5,7 @@ import (
 
 	"github.com/hashicorp/terraform/helper/schema"
 	"github.com/hashicorp/terraform/terraform"
-	ibclient "github.com/infobloxopen/infoblox-go-client"
+	ibclient "github.com/natemellendorf/infoblox-go-client"
 )
 
 //Provider returns a terraform.ResourceProvider.
@@ -63,16 +63,17 @@ func Provider() terraform.ResourceProvider {
 			},
 		},
 		ResourcesMap: map[string]*schema.Resource{
-			"infoblox_network":        resourceNetwork(),
-			"infoblox_network_view":   resourceNetworkView(),
-			"infoblox_ip_allocation":  resourceIPAllocation(),
-			"infoblox_ip_association": resourceIPAssociation(),
-			"infoblox_a_record":       resourceARecord(),
-			"infoblox_cname_record":   resourceCNAMERecord(),
-			"infoblox_ptr_record":     resourcePTRRecord(),
+			"infoblox_network":           resourceNetwork(),
+			"infoblox_network_container": resourceNetworkContainer(),
+			"infoblox_network_view":      resourceNetworkView(),
+			"infoblox_ip_allocation":     resourceIPAllocation(),
+			"infoblox_ip_association":    resourceIPAssociation(),
+			"infoblox_a_record":          resourceARecord(),
+			"infoblox_cname_record":      resourceCNAMERecord(),
+			"infoblox_ptr_record":        resourcePTRRecord(),
 		},
 		DataSourcesMap: map[string]*schema.Resource{
-			"infoblox_network": dataSourceNetwork(),
+			"infoblox_network":      dataSourceNetwork(),
 			"infoblox_a_record":     dataSourceARecord(),
 			"infoblox_cname_record": dataSourceCNameRecord(),
 		},

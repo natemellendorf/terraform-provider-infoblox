@@ -1,8 +1,8 @@
-module github.com/infobloxopen/terraform-provider-infoblox
+module github.com/natemellendorf/terraform-provider-infoblox
 
-go 1.12
+go 1.16
 
 require (
-	github.com/hashicorp/terraform v0.12.9
-	github.com/infobloxopen/infoblox-go-client v1.1.0
+	github.com/hashicorp/terraform v0.14.8
+	github.com/natemellendorf/infoblox-go-client v1.1.1
 )

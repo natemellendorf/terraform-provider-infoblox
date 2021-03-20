@@ -19,6 +19,7 @@ import (
 
 var goGetterDetectors = []getter.Detector{
 	new(getter.GitHubDetector),
+	new(getter.GitDetector),
 	new(getter.BitBucketDetector),
 	new(getter.GCSDetector),
 	new(getter.S3Detector),
@@ -84,7 +85,7 @@ func (g reusingGetter) getWithGoGetter(instPath, addr string) (string, error) {
 
 	log.Printf("[DEBUG] will download %q to %s", packageAddr, instPath)
 
-	realAddr, err := getter.Detect(packageAddr, instPath, getter.Detectors)
+	realAddr, err := getter.Detect(packageAddr, instPath, goGetterDetectors)
 	if err != nil {
 		return "", err
 	}
@@ -149,4 +150,19 @@ func (g reusingGetter) getWithGoGetter(instPath, addr string) (string, error) {
 	// If we got this far then we have apparently succeeded in downloading
 	// the requested object!
 	return filepath.Clean(finalDir), nil
+}
+
+// splitAddrSubdir splits the given address (which is assumed to be a
+// registry address or go-getter-style address) into a package portion
+// and a sub-directory portion.
+//
+// The package portion defines what should be downloaded and then the
+// sub-directory portion, if present, specifies a sub-directory within
+// the downloaded object (an archive, VCS repository, etc) that contains
+// the module's configuration files.
+//
+// The subDir portion will be returned as empty if no subdir separator
+// ("//") is present in the address.
+func splitAddrSubdir(addr string) (packageAddr, subDir string) {
+	return getter.SourceDirSubdir(addr)
 }
