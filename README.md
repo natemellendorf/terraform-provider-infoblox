@@ -46,6 +46,7 @@ $ make testacc
 ### Resource
 * Creation of Network View in NIOS appliance
 * Creation & Deletion of Network in NIOS appliance
+* Creation & Deletion of Network Container in NIOS appliance
 * Allocation & Deallocation of IP from a Network
 * Association & Disassociation of IP Address for a VM
 * Creation and Deletion of A, CNAME, Host, and Ptr records
