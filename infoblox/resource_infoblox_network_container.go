@@ -68,19 +68,28 @@ func resourceNetworkContainerCreate(d *schema.ResourceData, m interface{}) error
 
 	var network_container *ibclient.NetworkContainer
 	var err error
+
 	if cidr == "" && parent_cidr != "" && prefixLen > 1 {
-		network_container, err := objMgr.GetNetworkContainer(networkViewName, parent_cidr)
-		if network_container == nil {
+		log.Printf("[DEBUG] %s: Searching for network container: %s", resourceNetworkContainerIDString(d), parent_cidr)
+
+		parent_network_container, err := objMgr.GetNetworkContainer(networkViewName, parent_cidr)
+		if parent_network_container == nil {
 			return fmt.Errorf(
 				"Allocation of network container failed in network view (%s) : Parent network container %s not found.",
 				networkViewName, parent_cidr)
 
 		}
 
+		log.Printf("[DEBUG] %s: Found parent container: %s", resourceNetworkContainerIDString(d), parent_network_container.Ref)
+		log.Printf("[DEBUG] %s: Attempting to allocate next %v from parent...", resourceNetworkContainerIDString(d), prefixLen)
+
 		network_container, err = objMgr.AllocateNetworkContainer(networkViewName, parent_cidr, uint(prefixLen), networkName)
 		if err != nil {
 			return fmt.Errorf("Allocation of network container failed in network view (%s) : %s", networkViewName, err)
 		}
+
+		log.Printf("[DEBUG] %s: Successfully allocated the new container: %s", resourceNetworkContainerIDString(d), network_container.Ref)
+
 		d.Set("cidr", network_container.Cidr)
 	} else if cidr != "" {
 		network_container, err = objMgr.CreateNetworkContainer(networkViewName, cidr, networkName)
